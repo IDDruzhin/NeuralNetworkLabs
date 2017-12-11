@@ -2,6 +2,7 @@
 Рассматривается задача многоклассовой классификации. 101 класс.  
 Ссылка на данные: http://www.vision.caltech.edu/Image_Datasets/Caltech101/
 
+# Тренировочные и тестовые данные
 Исходные данные представляют собой набор jpg изображений. Все изображения каждого класса хранятся в отдельной папке, соответствующей этому классу.  
 Изначально в наборе изображений присутствует фон (BACKGROUND_Google). В рассматриваемой задаче он не учитывается.
 
@@ -15,8 +16,15 @@
 Тренировочный набор: 70% изображений из каждого класса. 6026 изображений.  
 Тестовый набор: 30% изображений из каждого класса. 2651 изображений.  
 
+# Показатели качества
 В качестве метрики используется top-1 точность:  
 <a href="https://www.codecogs.com/eqnedit.php?latex=\frac{1}{N}\sum_{i=1}^{N}I(y^{(i)}-\tilde{y}^{(i)})" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\frac{1}{N}\sum_{i=1}^{N}I(y^{(i)}-\tilde{y}^{(i)})" title="\frac{1}{N}\sum_{i=1}^{N}I(y^{(i)}-\tilde{y}^{(i)})" /></a>  
 I – индикатор, N – число тестовых изображений, <a href="https://www.codecogs.com/eqnedit.php?latex=y^{(i)}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?y^{(i)}" title="y^{(i)}" /></a> – истинный индекс класса для i-го изображения, <a href="https://www.codecogs.com/eqnedit.php?latex=\tilde{y}^{(i)}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\tilde{y}^{(i)}" title="\tilde{y}^{(i)}" /></a> – предсказанный индекс класса для i-го изображения.
 
+# Библиотека
 Для решения задачи используется библиотека Keras с бэкендом TensorFlow.
+
+# Тестовая инфраструктура
+CPU: Intel i7-3770k (3.50 GHz)  
+GPU: GeForce GTX 1080 8 Gb  
+RAM: DDR3 8 GB (1333 MHz)  

@@ -1,7 +1,6 @@
 import numpy as np
 
 np.random.seed(777)
-batch_size = 32
 goal_num_classes = 101
 epochs = 35
 from keras.models import Sequential
@@ -17,6 +16,9 @@ from keras import applications
 import copy
 import time
 
+batch_size = 32
+sgd = SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
+
 
 ###Read Goal Data Set
 from os import listdir
@@ -26,6 +28,7 @@ ImagesPath="D:\\SomeData\\Caltech101\\Images\\"
 classes = [f for f in listdir(ImagesPath)]
 train_volume=0.7
 size = 128,128
+src_num_classes = 101
 goal_x_train=[]
 goal_x_test=[]
 goal_y_train=[]
@@ -61,7 +64,7 @@ print ("GOAL DATA READED")
 #configure default VGG16
 model = applications.VGG16(weights=None, input_tensor = Input(shape=(128, 128, 3)), input_shape=(128, 128, 3), include_top=False)
 #load pre-trein weights
-model.load_weights("C:\\KUSTIKOVA\\Lab5\\vgg16_weights_tf_dim_ordering_tf_kernels_notop.h5")# WA for avoid directly download issue
+model.load_weights("D:\\SomeData\\KerasWeights\\vgg16_weights_tf_dim_ordering_tf_kernels_notop.h5")# WA for avoid directly download issue
 #configure classificator
 x = model.output
 x = GlobalAveragePooling2D()(x)
@@ -71,8 +74,7 @@ my_model = Model(inputs=model.input, outputs=predictions)
 #froze kernel's weights
 for layer in model.layers:
     layer.trainable = False
-    
-sgd = SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
+
 # Let's train the model using RMSprop
 my_model.compile(loss='categorical_crossentropy',
               optimizer=sgd,
@@ -101,7 +103,7 @@ K.set_session(sess)
 #configure default VGG16
 model = applications.VGG16(weights=None, input_tensor = Input(shape=(128, 128, 3)), input_shape=(128, 128, 3), include_top=False)
 #load pre-trein weights
-model.load_weights("C:\\KUSTIKOVA\\Lab5\\vgg16_weights_tf_dim_ordering_tf_kernels_notop.h5")# WA for avoid directly download issue
+model.load_weights("D:\\SomeData\\KerasWeights\\vgg16_weights_tf_dim_ordering_tf_kernels_notop.h5")# WA for avoid directly download issue
 #configure classificator
 x = model.output
 x = GlobalAveragePooling2D()(x)
@@ -109,7 +111,6 @@ x = Dense(512, activation='relu')(x)
 predictions = Dense(goal_num_classes, activation='softmax')(x)
 my_model = Model(inputs=model.input, outputs=predictions)
 
-sgd = SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
 # Let's train the model using RMSprop
 my_model.compile(loss='categorical_crossentropy',
               optimizer=sgd,
@@ -144,7 +145,6 @@ x = Dense(512, activation='relu')(x)
 predictions = Dense(goal_num_classes, activation='softmax')(x)
 my_model = Model(inputs=model.input, outputs=predictions)
 
-sgd = SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
 # Let's train the model using RMSprop
 my_model.compile(loss='categorical_crossentropy',
               optimizer=sgd,
